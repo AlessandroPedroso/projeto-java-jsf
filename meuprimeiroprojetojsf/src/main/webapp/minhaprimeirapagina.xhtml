@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Frameset//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-frameset.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" 
+	  xmlns:h="http://java.sun.com/jsf/html">
+
+<h:head>
+<title>Olá JSF</title>
+</h:head>
+
+<h:body>
+
+	<h:form id="formPessoa">
+		
+		<h1>Ola Jsf</h1>
+		
+
+				Nome:
+		<h:inputText id="campoNome" value="#{pessoaBean.nome}"/>
+		<h:inputSecret id="senha" value="#{pessoaBean.senha}" />
+		<h:inputTextarea id="texto" value="#{pessoaBean.texto}" rows="10" cols="10" />
+			<h:commandButton binding="#{pessoaBean.commandButton}" value="Adicionar nome" action="#{pessoaBean.addNome}"/>
+		<br/>
+		<br/>
+		
+		<h:outputText value="saida de texto"/> <!-- usado para mostrar -->
+		<br/>
+		
+		<h:outputLabel value="Nome:" for="camponome" />	
+		<h:inputText id="camponome" /><!-- usado a gravar -->
+	
+		
+		<h:dataTable value="#{pessoaBean.nomes}" var="nome">
+			
+			<h:column>
+				
+				<h:outputText value="#{nome}" />
+
+			
+			</h:column>
+			
+		</h:dataTable>
+		
+		
+	</h:form>
+
+</h:body>
+
+</html>
