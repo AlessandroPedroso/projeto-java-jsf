@@ -1,11 +1,12 @@
 package br.com.cursojsf;
 
-import java.util.ArrayList;
-import java.util.List;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
-import javax.faces.component.html.HtmlCommandButton;
+
+
+import br.com.dao.DaoGeneric;
+import br.com.entidades.Pessoa;
 
 @ViewScoped
 //@SessionScoped
@@ -13,6 +14,74 @@ import javax.faces.component.html.HtmlCommandButton;
 @ManagedBean(name = "pessoaBean")
 public class PessoaBean {
 
+	private Pessoa pessoa = new Pessoa();
+	
+	private DaoGeneric<Pessoa> daoGeneric = new DaoGeneric<Pessoa>();
+	
+	
+	public void salvar() {
+		daoGeneric.salvar(pessoa);
+		
+		
+	}
+
+
+	public Pessoa getPessoa() {
+		return pessoa;
+	}
+
+
+	public void setPessoa(Pessoa pessoa) {
+		this.pessoa = pessoa;
+	}
+
+
+	public DaoGeneric<Pessoa> getDaoGeneric() {
+		return daoGeneric;
+	}
+
+
+	public void setDaoGeneric(DaoGeneric<Pessoa> daoGeneric) {
+		this.daoGeneric = daoGeneric;
+	}
+	
+	 
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	/*
 	private String nome;
 	private String senha;
 	private String texto;
@@ -73,5 +142,5 @@ public class PessoaBean {
 	public void setNome(String nome) {
 		this.nome = nome;
 	}
-
+*/
 }

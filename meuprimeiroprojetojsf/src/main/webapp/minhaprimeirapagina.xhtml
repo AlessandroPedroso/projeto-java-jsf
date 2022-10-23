@@ -8,41 +8,24 @@
 </h:head>
 
 <h:body>
-
 	<h:form id="formPessoa">
-		
 		<h1>Ola Jsf</h1>
 		
-
-				Nome:
-		<h:inputText id="campoNome" value="#{pessoaBean.nome}"/>
-		<h:inputSecret id="senha" value="#{pessoaBean.senha}" />
-		<h:inputTextarea id="texto" value="#{pessoaBean.texto}" rows="10" cols="10" />
-			<h:commandButton binding="#{pessoaBean.commandButton}" value="Adicionar nome" action="#{pessoaBean.addNome}"/>
-		<br/>
-		<br/>
+		<h:outputLabel value="Nome:" />
+		<h:inputText value="#{pessoaBean.pessoa.nome}"></h:inputText>
 		
-		<h:outputText value="saida de texto"/> <!-- usado para mostrar -->
 		<br/>
+		<h:outputLabel value="Sobrenome:" />
+		<h:inputText value="#{pessoaBean.pessoa.sobrenome}"></h:inputText>
 		
-		<h:outputLabel value="Nome:" for="camponome" />	
-		<h:inputText id="camponome" /><!-- usado a gravar -->
+		<br/>
+		<h:outputLabel value="Idade:" />
+		<h:inputText value="#{pessoaBean.pessoa.idade}"></h:inputText>
+		
+		<br/>
+		<h:commandButton value="Salvar" action="#{pessoaBean.salvar}"/>
 	
-		
-		<h:dataTable value="#{pessoaBean.nomes}" var="nome">
-			
-			<h:column>
-				
-				<h:outputText value="#{nome}" />
-
-			
-			</h:column>
-			
-		</h:dataTable>
-		
-		
 	</h:form>
-
 </h:body>
 
 </html>
