@@ -20,8 +20,9 @@ public class PessoaBean {
 	
 	
 	public void salvar() {
-		daoGeneric.salvar(pessoa);
 		
+		daoGeneric.salvar(pessoa);
+		pessoa = new Pessoa();
 		
 	}
 
