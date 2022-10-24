@@ -21,9 +21,22 @@ public class PessoaBean {
 	
 	public void salvar() {
 		
+		pessoa = daoGeneric.merge(pessoa);
+		
+		/*
 		daoGeneric.salvar(pessoa);
 		pessoa = new Pessoa();
+		*/
 		
+	}
+	
+	public void novo() {
+		pessoa = new Pessoa();
+	}
+	
+	public void remove() {
+		daoGeneric.DeletePorId(pessoa);
+		pessoa = new Pessoa();
 	}
 
 
