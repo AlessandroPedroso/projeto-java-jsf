@@ -45,7 +45,7 @@ public class PessoaBean {
 		carregarPessoas();
 	}
 	
-	@PostConstruct
+	@PostConstruct //carrega a lista quando abrir a pagina
 	public void carregarPessoas() {
 		pessoas = daoGeneric.getListEntity(Pessoa.class);
 	}

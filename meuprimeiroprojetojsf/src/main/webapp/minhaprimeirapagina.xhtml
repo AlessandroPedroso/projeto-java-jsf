@@ -12,6 +12,8 @@
 	<h:form id="formPessoa">
 		<h1>Ola Jsf</h1>
 		
+		<h:graphicImage height="50px" width="50px" library="img" name="logotipo.png"/>
+		
 		<h:panelGrid columns="2">
 				<f:facet name="header">
 					<h:outputText value="Cadastro em JSF" />
@@ -31,6 +33,25 @@
 				<h:outputLabel value="Idade:" />
 				<h:inputText value="#{pessoaBean.pessoa.idade}"/>
 				
+				<h:outputLabel value="Sexo:" />
+				
+				<h:selectOneMenu id="campoSexo" value="#{pessoaBean.pessoa.sexo}" required="false">
+					<f:selectItem itemValue="Não Especificado" itemLabel="[-Selecione-]" noSelectionOption="true" />
+					<f:selectItem itemValue="MASCULINO" itemLabel="Masculino"/>
+					<f:selectItem itemValue="FEMININO" itemLabel="Feminino"/>
+				
+				</h:selectOneMenu>
+				
+				
+				<h:outputLabel value="Frameworks:"/>
+				<h:selectManyMenu id="campoframeworks" value="#{pessoaBean.pessoa.framewroks}" style="height:150px;">
+					<f:selectItem itemValue="Hibernate"/>
+					<f:selectItem itemValue="Spring MVC"/>
+					<f:selectItem itemValue="JPA"/>
+					<f:selectItem itemValue="PrimeFaces"/>
+					<f:selectItem itemValue="JSF"/>
+				</h:selectManyMenu>
+				
 				<h:outputLabel/>
 				<h:panelGroup>
 					<h:commandButton value="Novo" action="#{pessoaBean.novo}"/>
@@ -41,36 +62,41 @@
 		
 
 				
-		<h:dataTable value="#{pessoaBean.pessoas}" var="p">
+		<h:dataTable value="#{pessoaBean.pessoas}" var="p" border="3" cellpadding="4">
+			<f:facet name="header">
+				Lista de pessoas cadastradas
+			</f:facet>
 			<h:column>
+				<f:facet name="header">ID</f:facet>
 				<h:outputText value="#{p.id}"/>
 			
 			</h:column>
 
 			<h:column>
+				<f:facet name="header">Nome</f:facet>
 				<h:outputText value="#{p.nome}" />
 
 			</h:column>
 
 			<h:column>
+			<f:facet name="header">Sobrenome</f:facet>
 				<h:outputText value="#{p.sobrenome}" />
 
 			</h:column>
 			
 			<h:column>
-				
-				<h:commandLink value="Editar">
+				<f:facet name="header">Editar</f:facet>
+				<h:commandLink value="Editar" >
 					<f:setPropertyActionListener value="#{p}" target="#{pessoaBean.pessoa}"/>
 				</h:commandLink>
-				
+
 			</h:column>
 
 			<h:column>
-
+				<f:facet name="header">Excluir</f:facet>
 				<h:commandLink value="Excluir" action="#{pessoaBean.remove}">
 					<f:setPropertyActionListener value="#{p}" target="#{pessoaBean.pessoa}" />
 				</h:commandLink>
-
 			</h:column>
 
 		</h:dataTable>

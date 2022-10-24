@@ -29,6 +29,26 @@ public class Pessoa implements Serializable {
 	@Temporal(TemporalType.DATE)
 	private Date dataNascimento;
 	
+	private String sexo;
+	
+	private String[] framewroks;
+	
+	public void setFramewroks(String[] framewroks) {
+		this.framewroks = framewroks;
+	}
+	
+	public String[] getFramewroks() {
+		return framewroks;
+	}
+	
+	public void setSexo(String sexo) {
+		this.sexo = sexo;
+	}
+	
+	public String getSexo() {
+		return sexo;
+	}
+	
 	public Pessoa() {
 		
 	}
