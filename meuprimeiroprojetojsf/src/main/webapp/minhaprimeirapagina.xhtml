@@ -5,18 +5,17 @@
 	  xmlns:f="http://java.sun.com/jsf/core">
 
 <h:head>
-<title>Olá JSF</title>
+<title>Cadastro de Usuário</title>
 </h:head>
 
 <h:body>
 	<h:form id="formPessoa">
-		<h1>Ola Jsf</h1>
 		
 		<h:graphicImage height="50px" width="50px" library="img" name="logotipo.png"/>
 		
 		<h:panelGrid columns="2">
 				<f:facet name="header">
-					<h:outputText value="Cadastro em JSF" />
+					<h:outputText value="Cadastro de Usuário" />
 				</f:facet>
 				<h:outputLabel value="Id:" />
 				<h:inputText value="#{pessoaBean.pessoa.id}" readonly="true"/>
@@ -52,11 +51,32 @@
 					<f:selectItem itemValue="JSF"/>
 				</h:selectManyMenu>
 				
-				<h:outputLabel/>
+				<h:outputLabel value="Ativo:"/>
+				<h:selectBooleanCheckbox value="#{pessoaBean.pessoa.ativo}" />
+				
+				<h:outputLabel value="login" />
+				<h:inputText value="#{pessoaBean.pessoa.login}"/>
+				
+				<h:outputLabel value="Senha:" />
+				<h:inputSecret value="#{pessoaBean.pessoa.senha}"/>
+
+
+			<h:outputLabel value="Perfil do usuário:" />
+
+			<h:selectOneMenu id="perfil" value="#{pessoaBean.pessoa.perfilUser}" required="false">
+				<f:selectItem itemLabel="[-Selecione-]" noSelectionOption="true" />
+				<f:selectItem itemValue="ADMINISTRADOR" itemLabel="Administrador" />
+				<f:selectItem itemValue="SECRETARIO" itemLabel="Secretário" />
+				<f:selectItem itemValue="RECEPCIONISTA" itemLabel="Recepcionista" />
+
+			</h:selectOneMenu>
+
+			<h:outputLabel/>
 				<h:panelGroup>
-					<h:commandButton value="Novo" action="#{pessoaBean.novo}"/>
-					<h:commandButton value="Salvar" action="#{pessoaBean.salvar}"/>
-					<h:commandButton value="Remove" action="#{pessoaBean.remove}"/>
+					<h:commandButton value="Novo" action="#{pessoaBean.novo}"  image="/resources/img/iconadd.png" title="Novo"/>
+					<h:commandButton value="Salvar" action="#{pessoaBean.salvar}" image="/resources/img/salvar.png" title="Salvar"/>
+					<h:commandButton value="Remove" action="#{pessoaBean.remove}" image="/resources/img/excluir.png" title="Excluir"/>
+					<h:commandButton value="Limpar" type="reset"/>
 				</h:panelGroup>
 		</h:panelGrid>
 		
@@ -64,7 +84,7 @@
 				
 		<h:dataTable value="#{pessoaBean.pessoas}" var="p" border="3" cellpadding="4">
 			<f:facet name="header">
-				Lista de pessoas cadastradas
+				Lista de usuários cadastrados
 			</f:facet>
 			<h:column>
 				<f:facet name="header">ID</f:facet>
@@ -86,16 +106,18 @@
 			
 			<h:column>
 				<f:facet name="header">Editar</f:facet>
-				<h:commandLink value="Editar" >
+				<h:commandLink title="Editar" >
 					<f:setPropertyActionListener value="#{p}" target="#{pessoaBean.pessoa}"/>
+					<h:graphicImage value="/resources/img/editar.png" />
 				</h:commandLink>
 
 			</h:column>
 
 			<h:column>
 				<f:facet name="header">Excluir</f:facet>
-				<h:commandLink value="Excluir" action="#{pessoaBean.remove}">
+				<h:commandLink action="#{pessoaBean.remove}" title="Excluir">
 					<f:setPropertyActionListener value="#{p}" target="#{pessoaBean.pessoa}" />
+					<h:graphicImage value="/resources/img/excluir.png"/>
 				</h:commandLink>
 			</h:column>
 

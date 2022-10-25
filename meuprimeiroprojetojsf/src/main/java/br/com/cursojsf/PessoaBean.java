@@ -21,6 +21,7 @@ public class PessoaBean {
 	private Pessoa pessoa = new Pessoa();
 	
 	private DaoGeneric<Pessoa> daoGeneric = new DaoGeneric<Pessoa>();
+	
 	private List<Pessoa> pessoas = new ArrayList<Pessoa>();
 	
 	
