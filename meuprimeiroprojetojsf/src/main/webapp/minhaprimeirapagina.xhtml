@@ -9,7 +9,15 @@
 </h:head>
 
 <h:body>
-	<h:form id="formPessoa">
+	
+		<h:form>
+				<h:commandLink value="Administração" action="lancamento" style="margin-left:1cm;"/>
+				<h:commandLink value="Lançamentos" action="minhaprimeirapagina" style="margin-left:1cm;"/>
+				<h:commandLink value="Trocar Usuário" action="index" style="margin-left:1cm;"/>
+		
+		</h:form>
+
+	<h:form id="formPessoa" rendered="#{pessoaBean.permiteAcesso('ADMINISTRADOR')}">
 		
 		<h:graphicImage height="50px" width="50px" library="img" name="logotipo.png"/>
 		
@@ -73,10 +81,10 @@
 
 			<h:outputLabel/>
 				<h:panelGroup>
-					<h:commandButton value="Novo" action="#{pessoaBean.novo}"  image="/resources/img/iconadd.png" title="Novo"/>
-					<h:commandButton value="Salvar" action="#{pessoaBean.salvar}" image="/resources/img/salvar.png" title="Salvar"/>
-					<h:commandButton value="Remove" action="#{pessoaBean.remove}" image="/resources/img/excluir.png" title="Excluir"/>
-					<h:commandButton value="Limpar" type="reset"/>
+					<h:commandButton value="Novo" action="#{pessoaBean.novo}"  image="/resources/img/iconadd.png" title="Novo" />
+					<h:commandButton value="Salvar" action="#{pessoaBean.salvar}" image="/resources/img/salvar.png" title="Salvar" style="margin-left:1cm;"/>
+					<h:commandButton value="Remove" action="#{pessoaBean.remove}" image="/resources/img/excluir.png" title="Excluir" style="margin-left:1cm;"/>
+					<h:commandButton value="Limpar" type="reset" style="margin-left:1cm;"/>
 				</h:panelGroup>
 		</h:panelGrid>
 		
