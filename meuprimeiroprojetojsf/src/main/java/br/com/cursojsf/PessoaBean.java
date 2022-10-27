@@ -7,10 +7,15 @@ import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
-
+import javax.faces.context.ExternalContext;
+import javax.faces.context.FacesContext;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import br.com.dao.DaoGeneric;
 import br.com.entidades.Pessoa;
+import br.com.repository.IDaoPessoa;
+import br.com.repository.IDaoPessoaImpl;
 
 @ViewScoped
 //@SessionScoped
@@ -23,6 +28,10 @@ public class PessoaBean {
 	private DaoGeneric<Pessoa> daoGeneric = new DaoGeneric<Pessoa>();
 	
 	private List<Pessoa> pessoas = new ArrayList<Pessoa>();
+	
+	private IDaoPessoa iDaoPessoa = new IDaoPessoaImpl();
+	
+	
 	
 	
 	public void salvar() {
@@ -79,6 +88,37 @@ public class PessoaBean {
 		return pessoas;
 	}
 	
+	
+	public String logar() {
+		
+		Pessoa pessoaUser = iDaoPessoa.consultarUsuario(pessoa.getLogin(), pessoa.getSenha());
+		
+		if(pessoaUser!=null) { //achou usuario
+			
+			/*
+			//adicionar o usuário na sessão - usuarioLogado
+			FacesContext context = FacesContext.getCurrentInstance();
+			ExternalContext externalContext = context.getExternalContext();
+			externalContext.getSessionMap().put("usuarioLogado", pessoaUser.getLogin());
+			*/
+			
+			//adicionar o usuário na sessão - usuarioLogado
+			FacesContext context = FacesContext.getCurrentInstance();
+			ExternalContext externalContext = context.getExternalContext();
+			
+			HttpServletRequest req = (HttpServletRequest) externalContext.getRequest();
+			HttpSession session = req.getSession();
+			
+			session.setAttribute("usuarioLogado", pessoaUser);
+			
+			return "minhaprimeirapagina.jsf?faces-redirect=true";
+			
+		}
+		
+		//System.out.println(pessoa.getLogin() + " - " + pessoa.getSenha());
+		
+		return "index.jsf";
+	}
 	 
 	
 	
