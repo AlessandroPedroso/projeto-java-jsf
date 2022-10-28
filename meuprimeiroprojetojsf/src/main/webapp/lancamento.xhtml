@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="ISO-8859-1" ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Frameset//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-frameset.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" 
-	  xmlns:h="http://java.sun.com/jsf/html">
+	  xmlns:h="http://java.sun.com/jsf/html"
+	  xmlns:f="http://java.sun.com/jsf/core">
 
 <h:head>
 
@@ -36,16 +37,52 @@ align-items: center;
 </h:head>
 
 <h:body>
-<div class="container">
-	<div class="box">
-	<h:form id="formLancamento">
+			<h:form>
+				<h:commandLink value="Administração" action="minhaprimeirapagina?faces-redirect=true" style="margin-left:1cm;"/>
+				<h:commandLink value="Lançamentos" action="lancamento?faces-redirect=true" style="margin-left:1cm;"/>
+				<h:commandLink value="Trocar Usuário" action="index?faces-redirect=true" style="margin-left:1cm;"/>
+		
+		</h:form>
+
+
+	<h:form id="formLancamento" style="margin-left:40%; margin-top:22%;">
 	
-	
+		<h:form>
+			
+			<h:panelGrid columns="2">
+				
+				<f:facet name="header">
+					
+					<h:outputText value="Lançamentos" />
+				
+				</f:facet>
+				
+				<h:outputLabel value="ID:"/>
+				<h:inputText value="#{lancamentoBean.lancamento.id}" readonly="true"/>
+				
+				<h:outputLabel value="Nota:"/>
+				<h:inputText value="#{lancamentoBean.lancamento.numeroNotaFiscal}"/>
+				
+				<h:outputLabel value="Origem:"/>
+				<h:inputText value="#{lancamentoBean.lancamento.empresaOrigem}"/>
+				
+				<h:outputLabel value="Destino:"/>
+				<h:inputText value="#{lancamentoBean.lancamento.empresaDestino}"/>
+				
+				<h:outputLabel/>
+				<h:panelGroup>
+					<h:commandButton value="Novo" action="#{lancamentoBean.novo}"  image="/resources/img/iconadd.png" title="Novo" />
+					<h:commandButton value="Salvar" action="#{lancamentoBean.salvar}" image="/resources/img/salvar.png" title="Salvar" style="margin-left:1cm;"/>
+					<h:commandButton value="Remove" action="#{lancamentoBean.remove}" image="/resources/img/excluir.png" title="Excluir" style="margin-left:1cm;"/>
+					<h:commandButton value="Limpar" type="reset" style="margin-left:1cm;"/>
+				</h:panelGroup>		
+			</h:panelGrid>
+		
+		</h:form>
 		
 
 	</h:form>
-	</div>
-</div>
+
 </h:body>
 
 </html>

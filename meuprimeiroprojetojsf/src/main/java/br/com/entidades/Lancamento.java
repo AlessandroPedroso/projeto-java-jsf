@@ -26,7 +26,7 @@ public class Lancamento implements Serializable {
 
 	private String empresaDestino;
 
-	@ManyToOne(optional = false)
+	@ManyToOne(optional = false) // muitos lançamentos para um usuário
 	@ForeignKey(name = "usuario_fk")
 	private Pessoa usuario;
 
