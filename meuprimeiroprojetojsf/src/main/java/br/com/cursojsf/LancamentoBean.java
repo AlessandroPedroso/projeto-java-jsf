@@ -37,7 +37,7 @@ public class LancamentoBean {
 		Pessoa pessoaUser = (Pessoa) session.getAttribute("usuarioLogado");
 		
 		lancamento.setUsuario(pessoaUser); // salva com o usuario pessoa logado
-		daoGeneric.salvar(lancamento);// salva no banco de dados referente a tabela de lançamentos
+		lancamento = daoGeneric.merge(lancamento);// salva no banco de dados referente a tabela de lançamentos
 		
 		carregarLancamentos();
 		
@@ -50,8 +50,6 @@ public class LancamentoBean {
 		Long idLogado = usuarioLogadoId();
 		
 		lancamentosList = daoLancamento.consultar(idLogado);
-		
-		
 	}
 	
 	private Long usuarioLogadoId() {
