@@ -11,7 +11,7 @@
 <h:body>
 	
 		<h:form>
-				<h:commandLink value="Administração" action="minhaprimeirapagina?faces-redirect=true" style="margin-left:1cm;"/>
+				<h:commandLink value="Administração" action="minhaprimeirapagina?faces-redirect=true" rendered="#{pessoaBean.permiteAcesso('ADMINISTRADOR')}" style="margin-left:1cm;"/>
 				<h:commandLink value="Lançamentos" action="lancamento?faces-redirect=true" style="margin-left:1cm;"/>
 				<h:commandLink value="Trocar Usuário" action="index?faces-redirect=true" style="margin-left:1cm;"/>
 		
@@ -46,7 +46,6 @@
 					<f:selectItem itemValue="Não Especificado" itemLabel="[-Selecione-]" noSelectionOption="true" />
 					<f:selectItem itemValue="MASCULINO" itemLabel="Masculino"/>
 					<f:selectItem itemValue="FEMININO" itemLabel="Feminino"/>
-				
 				</h:selectOneMenu>
 				
 				
@@ -76,8 +75,15 @@
 				<f:selectItem itemValue="ADMINISTRADOR" itemLabel="Administrador" />
 				<f:selectItem itemValue="SECRETARIO" itemLabel="Secretário" />
 				<f:selectItem itemValue="RECEPCIONISTA" itemLabel="Recepcionista" />
-
 			</h:selectOneMenu>
+			
+			<h:outputLabel value="Programador:"/>
+			<h:selectOneRadio value="#{pessoaBean.pessoa.nivelProgramador}" layout="pageDirection">
+				<f:selectItem itemValue="J" itemLabel="Junior"/>
+				<f:selectItem itemValue="P" itemLabel="Pleno"/>
+				<f:selectItem itemValue="S" itemLabel="Senior"/>
+				<f:selectItem itemValue="E" itemLabel="Expecialista"/>
+			</h:selectOneRadio>
 
 			<h:outputLabel/>
 				<h:panelGroup>

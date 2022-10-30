@@ -38,7 +38,7 @@ align-items: center;
 
 <h:body>
 			<h:form>
-				<h:commandLink value="Administração" action="minhaprimeirapagina?faces-redirect=true" style="margin-left:1cm;"/>
+				<h:commandLink value="Administração" action="minhaprimeirapagina?faces-redirect=true" rendered="#{pessoaBean.permiteAcesso('ADMINISTRADOR')}" style="margin-left:1cm;"/>
 				<h:commandLink value="Lançamentos" action="lancamento?faces-redirect=true" style="margin-left:1cm;"/>
 				<h:commandLink value="Trocar Usuário" action="index?faces-redirect=true" style="margin-left:1cm;"/>
 		
@@ -71,7 +71,7 @@ align-items: center;
 				<h:panelGroup>
 					<h:commandButton value="Novo" action="#{lancamentoBean.novo}"  image="/resources/img/iconadd.png" title="Novo" />
 					<h:commandButton value="Salvar" action="#{lancamentoBean.salvar}" image="/resources/img/salvar.png" title="Salvar" style="margin-left:1cm;"/>
-					<h:commandButton value="Remove" action="#{lancamentoBean.remover}" image="/resources/img/excluir.png" title="Excluir" style="margin-left:1cm;"/>
+					<h:commandButton value="Remove" action="#{lancamentoBean.remover}" image="/resources/img/excluir.png" rendered="#{pessoaBean.permiteAcesso('ADMINISTRADOR')}" title="Excluir"  style="margin-left:1cm;"/>
 					<h:commandButton value="Limpar" type="reset" style="margin-left:1cm;"/>
 				</h:panelGroup>		
 			</h:panelGrid>
@@ -131,7 +131,7 @@ align-items: center;
 
 				</h:column>
 
-			<h:column>
+			<h:column rendered="#{pessoaBean.permiteAcesso('ADMINISTRADOR')}"> 
 				<f:facet name="header">Excluir</f:facet>
 				<h:commandLink action="#{lancamentoBean.remover}" title="Excluir">
 					<f:setPropertyActionListener value="#{lanc}"
