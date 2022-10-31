@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.ExternalContext;
@@ -38,6 +39,7 @@ public class PessoaBean {
 		
 		pessoa = daoGeneric.merge(pessoa);
 		carregarPessoas();
+		mostrarMsg("Cadastrado com sucesso!");// mostrar mensagem por ultimo SEMPRE!
 		/*
 		daoGeneric.salvar(pessoa);
 		pessoa = new Pessoa();
@@ -45,6 +47,13 @@ public class PessoaBean {
 		
 	}
 	
+	private void mostrarMsg(String msg) {
+		
+		FacesContext context = FacesContext.getCurrentInstance();
+		FacesMessage message = new FacesMessage(msg);
+		context.addMessage(null, message);
+	}
+
 	public void novo() {
 		pessoa = new Pessoa();
 	}
@@ -53,6 +62,7 @@ public class PessoaBean {
 		daoGeneric.DeletePorId(pessoa);
 		pessoa = new Pessoa();
 		carregarPessoas();
+		mostrarMsg("Removido com sucesso!");
 	}
 	
 	@PostConstruct //carrega a lista quando abrir a pagina
