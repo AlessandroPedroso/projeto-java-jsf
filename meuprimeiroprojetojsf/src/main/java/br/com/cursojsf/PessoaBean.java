@@ -1,6 +1,12 @@
 package br.com.cursojsf;
 
 
+import java.io.BufferedReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.URL;
+import java.net.URLConnection;
+import java.nio.Buffer;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -32,8 +38,6 @@ public class PessoaBean {
 	private List<Pessoa> pessoas = new ArrayList<Pessoa>();
 	
 	private IDaoPessoa iDaoPessoa = new IDaoPessoaImpl();
-	
-	
 	
 	
 	public void salvar() {
@@ -78,14 +82,34 @@ public class PessoaBean {
 	}
 	
 	public void pesquisaCep(AjaxBehaviorEvent event) {
-		System.out.println("Metodo pesquisa cep chamado CEP: " + pessoa.getCep());
+		//System.out.println("Metodo pesquisa cep chamado CEP: " + pessoa.getCep());
+		
+		try {
+			
+			URL url = new URL("https://viacep.com.br/ws/"+  pessoa.getCep() +"/json/");
+			URLConnection connection = url.openConnection();
+			InputStream is = connection.getInputStream();
+			BufferedReader br = new BufferedReader(new InputStreamReader(is,"UTF-8"));
+			
+			String cep = "";
+			StringBuilder jsoncep = new StringBuilder();
+			
+			while((cep = br.readLine()) != null) { //enquanto tiver linhas e não vazias
+				
+				jsoncep.append(cep);
+			}
+			
+			System.out.println(jsoncep);
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			mostrarMsg("Erro ao consultar o cep");
+		}
 	}
-
 
 	public Pessoa getPessoa() {
 		return pessoa;
 	}
-
 
 	public void setPessoa(Pessoa pessoa) {
 		this.pessoa = pessoa;
