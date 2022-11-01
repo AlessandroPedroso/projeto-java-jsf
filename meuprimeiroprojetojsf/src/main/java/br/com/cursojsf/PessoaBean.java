@@ -55,6 +55,12 @@ public class PessoaBean {
 	}
 
 	public void novo() {
+		/*executa algum processo antes de novo*/
+		pessoa = new Pessoa();
+	}
+	
+	public void limpar() {
+		/*executa algum processo antes de limpar*/
 		pessoa = new Pessoa();
 	}
 	

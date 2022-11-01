@@ -26,7 +26,9 @@
 				
 				
 				<h:outputLabel value="Nome:" />
-				<h:inputText value="#{pessoaBean.pessoa.nome}"/>
+				<h:inputText value="#{pessoaBean.pessoa.nome}" required="true" requiredMessage="Informe o nome do usuário!" validatorMessage="Nome tem que no minimo 10 letras">
+					<f:validateLength minimum="2" maximum="50"/>
+				</h:inputText>
 				
 				
 				<h:outputLabel value="Sobrenome:" />
@@ -44,6 +46,10 @@
 					<f:selectItem itemValue="FEMININO" itemLabel="Feminino"/>
 				</h:selectOneMenu>
 				
+				<h:outputLabel value="Nascimento:"/>
+				<h:inputText value="#{pessoaBean.pessoa.dataNascimento}" converterMessage="Data de nascimento errada!">
+					<f:convertDateTime pattern="dd/MM/yyyy" locale="pt_BR" timeZone="GMT-03:00"/>
+				</h:inputText>
 				
 				<h:outputLabel value="Frameworks:"/>
 				<h:selectManyMenu id="campoframeworks" value="#{pessoaBean.pessoa.framewroks}" style="height:150px;">
@@ -92,15 +98,20 @@
 
 			<h:outputLabel/>
 				<h:panelGroup>
-					<h:commandButton value="Novo" action="#{pessoaBean.novo}"  image="/resources/img/iconadd.png" title="Novo" />
+					<h:commandButton value="Novo" id="botaoNovo" action="#{pessoaBean.novo}"  image="/resources/img/iconadd.png" title="Novo">
+						<f:ajax execute="botaoNovo" render="@form"/>
+					</h:commandButton>
 					<h:commandButton value="Salvar" action="#{pessoaBean.salvar}" image="/resources/img/salvar.png" title="Salvar" style="margin-left:1cm;"/>
 					<h:commandButton value="Remove" action="#{pessoaBean.remove}" image="/resources/img/excluir.png" title="Excluir" style="margin-left:1cm;"/>
-					<h:commandButton value="Limpar" type="reset" style="margin-left:1cm;"/>
+					<h:commandButton value="Limpar" id="botaoLimpar" action="#{pessoaBean.limpar}" style="margin-left:1cm;">
+						<f:ajax execute="botaoLimpar" render="@form"/>
+					</h:commandButton>
 				</h:panelGroup>
 		</h:panelGrid>
 		
-
-				
+	</h:form>
+			
+	<h:form id="formTable">
 		<h:dataTable value="#{pessoaBean.pessoas}" var="p" border="3" cellpadding="4">
 			<f:facet name="header">
 				Lista de usuários cadastrados
@@ -141,8 +152,8 @@
 			</h:column>
 
 		</h:dataTable>
-	
 	</h:form>
+
 </h:body>
 
 </html>

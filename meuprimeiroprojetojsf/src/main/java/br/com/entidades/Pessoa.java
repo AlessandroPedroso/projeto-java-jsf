@@ -27,7 +27,7 @@ public class Pessoa implements Serializable {
 	private Integer idade;
 	
 	@Temporal(TemporalType.DATE)
-	private Date dataNascimento;
+	private Date dataNascimento = new Date();
 	
 	private String sexo;
 	
@@ -145,12 +145,12 @@ public class Pessoa implements Serializable {
 		this.idade = idade;
 	}
 
-	public Date getDataNascimento() {
-		return dataNascimento;
-	}
-
 	public void setDataNascimento(Date dataNascimento) {
 		this.dataNascimento = dataNascimento;
+	}
+	
+	public Date getDataNascimento() {
+		return dataNascimento;
 	}
 
 	@Override
