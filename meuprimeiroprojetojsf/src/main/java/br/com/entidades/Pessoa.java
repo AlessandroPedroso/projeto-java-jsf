@@ -62,6 +62,14 @@ public class Pessoa implements Serializable {
 	
 	private String ddd;
 	
+	public String getDdd() {
+		return ddd;
+	}
+
+	public void setDdd(String ddd) {
+		this.ddd = ddd;
+	}
+
 	public String getLogradouro() {
 		return logradouro;
 	}

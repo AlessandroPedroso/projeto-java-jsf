@@ -111,8 +111,9 @@ public class PessoaBean {
 			pessoa.setUf(gson.getUf());
 			pessoa.setBairro(gson.getBairro());
 			pessoa.setIbge(gson.getIbge());
+			pessoa.setDdd(gson.getDdd());
 			
-			//System.out.println(gson);
+			System.out.println(gson);
 			
 		} catch (Exception e) {
 			e.printStackTrace();
