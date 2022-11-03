@@ -20,6 +20,8 @@ import javax.faces.event.AjaxBehaviorEvent;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import com.google.gson.Gson;
+
 import br.com.dao.DaoGeneric;
 import br.com.entidades.Pessoa;
 import br.com.repository.IDaoPessoa;
@@ -99,7 +101,18 @@ public class PessoaBean {
 				jsoncep.append(cep);
 			}
 			
-			System.out.println(jsoncep);
+			Pessoa gson = new Gson().fromJson(jsoncep.toString(),Pessoa.class);
+			
+			pessoa.setCep(gson.getCep());
+			pessoa.setLogradouro(gson.getLogradouro());
+			pessoa.setComplemento(gson.getComplemento());
+			pessoa.setBairro(gson.getBairro());
+			pessoa.setLocalidade(gson.getLocalidade());
+			pessoa.setUf(gson.getUf());
+			pessoa.setBairro(gson.getBairro());
+			pessoa.setIbge(gson.getIbge());
+			
+			//System.out.println(gson);
 			
 		} catch (Exception e) {
 			e.printStackTrace();

@@ -1,6 +1,7 @@
 package br.com.entidades;
 
 import java.io.Serializable;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.Objects;
 
@@ -47,6 +48,68 @@ public class Pessoa implements Serializable {
 	
 	private String cep;
 	
+	private String logradouro;
+	
+	private String complemento;
+	
+	private String bairro;
+	
+	private String localidade;
+	
+	private String uf;
+	
+	private String ibge;
+	
+	private String ddd;
+	
+	public String getLogradouro() {
+		return logradouro;
+	}
+
+	public void setLogradouro(String logradouro) {
+		this.logradouro = logradouro;
+	}
+
+	public String getComplemento() {
+		return complemento;
+	}
+
+	public void setComplemento(String complemento) {
+		this.complemento = complemento;
+	}
+
+	public String getBairro() {
+		return bairro;
+	}
+
+	public void setBairro(String bairro) {
+		this.bairro = bairro;
+	}
+
+	public String getLocalidade() {
+		return localidade;
+	}
+
+	public void setLocalidade(String localidade) {
+		this.localidade = localidade;
+	}
+
+	public String getUf() {
+		return uf;
+	}
+
+	public void setUf(String uf) {
+		this.uf = uf;
+	}
+
+	public String getIbge() {
+		return ibge;
+	}
+
+	public void setIbge(String ibge) {
+		this.ibge = ibge;
+	}
+
 	public void setCep(String cep) {
 		this.cep = cep;
 	}
@@ -179,6 +242,17 @@ public class Pessoa implements Serializable {
 			return false;
 		Pessoa other = (Pessoa) obj;
 		return Objects.equals(id, other.id);
+	}
+
+	@Override
+	public String toString() {
+		return "Pessoa [id=" + id + ", nome=" + nome + ", sobrenome=" + sobrenome + ", idade=" + idade
+				+ ", dataNascimento=" + dataNascimento + ", sexo=" + sexo + ", framewroks="
+				+ Arrays.toString(framewroks) + ", ativo=" + ativo + ", login=" + login + ", senha=" + senha
+				+ ", perfilUser=" + perfilUser + ", nivelProgramador=" + nivelProgramador + ", linguagens="
+				+ Arrays.toString(linguagens) + ", cep=" + cep + ", logradouro=" + logradouro + ", complemento="
+				+ complemento + ", bairro=" + bairro + ", localidade=" + localidade + ", uf=" + uf + ", ibge=" + ibge
+				+ "]";
 	}
 	
 	
