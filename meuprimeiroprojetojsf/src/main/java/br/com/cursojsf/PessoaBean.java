@@ -14,16 +14,21 @@ import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
+import javax.faces.component.html.HtmlSelectOneMenu;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.faces.event.AjaxBehaviorEvent;
+import javax.faces.model.SelectItem;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import com.google.gson.Gson;
 
 import br.com.dao.DaoGeneric;
+import br.com.entidades.Cidades;
+import br.com.entidades.Estados;
 import br.com.entidades.Pessoa;
+import br.com.jpautil.JPAUtil;
 import br.com.repository.IDaoPessoa;
 import br.com.repository.IDaoPessoaImpl;
 
@@ -41,6 +46,9 @@ public class PessoaBean {
 	
 	private IDaoPessoa iDaoPessoa = new IDaoPessoaImpl();
 	
+	private List<SelectItem> estados;
+	
+	private List<SelectItem> cidades;
 	
 	public void salvar() {
 		
@@ -208,40 +216,71 @@ public class PessoaBean {
 		return pessoaUser.getPerfilUser().equals(acesso);
 		
 	}
-	 
 	
+	public void setEstados(List<SelectItem> estados) {
+		this.estados = estados;
+	}
 	
+	public List<SelectItem> getEstados() {
+		estados = iDaoPessoa.listaEstados();
+		return estados;
+	}
 	
+	public void carregaCidades(AjaxBehaviorEvent event) {
+		
+		//String codigoEstado = (String)event.getComponent().getAttributes().get("submittedValue");
+		
+		Estados estado = (Estados) ((HtmlSelectOneMenu) event.getSource()).getValue(); //pega o obejto inteiro selecionado no comboBox
+			
+			//Estados estado = JPAUtil.getEntityManager().find(Estados.class, Long.parseLong(codigoEstado));
+			
+			if(estado !=null) {
+				
+				pessoa.setEstados(estado);
+				List<Cidades> cidades = JPAUtil.getEntityManager().createQuery("from Cidades where estados.id = " +  estado.getId()).getResultList();
+				
+				List<SelectItem> selectItemsCidades = new ArrayList<SelectItem>();
+				
+				for (Cidades cidade : cidades) {
+					selectItemsCidades.add(new SelectItem(cidade, cidade.getNome()));
+				}
+				
+				setCidades(selectItemsCidades);
+				
+			}
+			//System.out.println(codigoEstado);
+		
+	}
 	
+	public void editar() {
+		
+		if(pessoa.getCidades() != null) {
+			
+			Estados estado = pessoa.getCidades().getEstados();
+			pessoa.setEstados(estado);
+			
+			List<Cidades> cidades = JPAUtil.getEntityManager().createQuery("from Cidades where estados.id = " +  estado.getId()).getResultList();
+			
+			List<SelectItem> selectItemsCidades = new ArrayList<SelectItem>();
+			
+			for (Cidades cidade : cidades) {
+				selectItemsCidades.add(new SelectItem(cidade, cidade.getNome()));
+			}
+			
+			setCidades(selectItemsCidades);
+			
+		}
+		
+		//System.out.println(pessoa);
+	}
 	
+	public void setCidades(List<SelectItem> cidades) {
+		this.cidades = cidades;
+	}
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+	public List<SelectItem> getCidades() {
+		return cidades;
+	}
 	
 	
 	/*
