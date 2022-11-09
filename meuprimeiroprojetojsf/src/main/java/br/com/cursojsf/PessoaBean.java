@@ -2,6 +2,9 @@ package br.com.cursojsf;
 
 
 import java.io.BufferedReader;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.URL;
@@ -21,6 +24,7 @@ import javax.faces.event.AjaxBehaviorEvent;
 import javax.faces.model.SelectItem;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import javax.servlet.http.Part;
 
 import com.google.gson.Gson;
 
@@ -50,7 +54,13 @@ public class PessoaBean {
 	
 	private List<SelectItem> cidades;
 	
+	private Part arquivofoto;
+	
+	
+	
 	public void salvar() {
+		
+		System.out.println(arquivofoto);
 		
 		pessoa = daoGeneric.merge(pessoa);
 		carregarPessoas();
@@ -280,6 +290,38 @@ public class PessoaBean {
 	
 	public List<SelectItem> getCidades() {
 		return cidades;
+	}
+	
+	public void setArquivofoto(Part arquivofoto) {
+		this.arquivofoto = arquivofoto;
+	}
+	
+	public Part getArquivofoto() {
+		return arquivofoto;
+	}
+	
+	/*Método que converte inputstream para array de bytes*/
+	private byte[] getByte (InputStream is) throws IOException {
+		 int len;
+		 int size = 1024;
+		 byte[] buf = null;
+		 
+		 if(is instanceof ByteArrayInputStream) {
+			 size = is.available();
+			 buf = new byte[size];
+			 len = is.read(buf,0,size);
+		 }else {
+			 ByteArrayOutputStream bos = new ByteArrayOutputStream();
+			 buf = new byte[size];
+			 
+			 while((len = is.read(buf,0,size)) != -1) {
+				 bos.write(buf,0,len);
+			 }
+			 
+			 buf = bos.toByteArray();
+		 }
+		 
+		 return buf;
 	}
 	
 	

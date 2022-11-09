@@ -14,7 +14,7 @@
 	
 	<ui:include src="/menu.xhtml"></ui:include> <!-- MENU -->
 
-	<h:form id="formPessoa" rendered="#{pessoaBean.permiteAcesso('ADMINISTRADOR')}">
+	<h:form id="formPessoa" enctype="multipart/form-data" rendered="#{pessoaBean.permiteAcesso('ADMINISTRADOR')}">
 		<h:messages infoStyle="color:green;"/>
 		<h:graphicImage height="50px" width="50px" library="img" name="logotipo.png"/>
 		
@@ -25,6 +25,8 @@
 				<h:outputLabel value="Id:" />
 				<h:inputText value="#{pessoaBean.pessoa.id}" readonly="true"/>
 				
+				<h:outputLabel value="Foto:" />
+				<h:inputFile id="foto" value="#{pessoaBean.arquivofoto}"></h:inputFile>
 				
 				<h:outputLabel value="Nome:" />
 				<h:inputText value="#{pessoaBean.pessoa.nome}" required="true" 
