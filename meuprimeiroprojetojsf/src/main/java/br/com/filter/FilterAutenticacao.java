@@ -1,7 +1,9 @@
 package br.com.filter;
 
 import java.io.IOException;
+import java.io.Serializable;
 
+import javax.inject.Inject;
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
 import javax.servlet.FilterConfig;
@@ -17,7 +19,14 @@ import br.com.entidades.Pessoa;
 import br.com.jpautil.JPAUtil;
 
 @WebFilter(urlPatterns = {"/*"}) //faz a verificação do usuario logado nas paginas
-public class FilterAutenticacao implements Filter{
+public class FilterAutenticacao implements Filter, Serializable{
+	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	@Inject
+	private JPAUtil jpaUtil;
 
 	@Override // doFilter é executado em todas as requisições
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
@@ -47,7 +56,7 @@ public class FilterAutenticacao implements Filter{
 	@Override
 	public void init(FilterConfig arg0) throws ServletException{ // init é executado quando está subindo o servidor
 		
-		JPAUtil.getEntityManager();
+		jpaUtil.getEntityManager();
 	}
 
 }

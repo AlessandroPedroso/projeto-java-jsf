@@ -9,6 +9,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.Serializable;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.ArrayList;
@@ -17,8 +18,6 @@ import java.util.Map;
 
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
-import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ViewScoped;
 import javax.faces.component.html.HtmlSelectOneMenu;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
@@ -26,6 +25,8 @@ import javax.faces.event.AjaxBehaviorEvent;
 import javax.faces.event.ValueChangeEvent;
 import javax.faces.model.SelectItem;
 import javax.imageio.ImageIO;
+import javax.inject.Inject;
+import javax.inject.Named;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -40,27 +41,38 @@ import br.com.entidades.Estados;
 import br.com.entidades.Pessoa;
 import br.com.jpautil.JPAUtil;
 import br.com.repository.IDaoPessoa;
-import br.com.repository.IDaoPessoaImpl;
 
-@ViewScoped
+//@ViewScoped
 //@SessionScoped
 //@ApplicationScoped
-@ManagedBean(name = "pessoaBean")
-public class PessoaBean {
+//@ManagedBean
+@javax.faces.view.ViewScoped // do cdi pacote view
+@Named(value = "pessoaBean")// manegedBean do cdi
+public class PessoaBean implements Serializable {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 
 	private Pessoa pessoa = new Pessoa();
-	
-	private DaoGeneric<Pessoa> daoGeneric = new DaoGeneric<Pessoa>();
-	
+		
 	private List<Pessoa> pessoas = new ArrayList<Pessoa>();
-	
-	private IDaoPessoa iDaoPessoa = new IDaoPessoaImpl();
 	
 	private List<SelectItem> estados;
 	
 	private List<SelectItem> cidades;
 	
 	private Part arquivofoto;
+	
+	@Inject
+	private DaoGeneric<Pessoa> daoGeneric;
+	
+	@Inject
+	private IDaoPessoa iDaoPessoa;
+	
+	@Inject
+	private JPAUtil jpaUtil;
 	
 
 	public Pessoa getPessoa() {
@@ -128,6 +140,7 @@ public class PessoaBean {
 		if(bufferedImage !=null) {
 			pessoa.setFotoIconBase64Original(imagemByte);/*salva imagem original*/
 				/*pega o tipo da imagem*/
+				@SuppressWarnings("static-access")
 				int type = bufferedImage.getType() == 0? bufferedImage.TYPE_INT_ARGB:bufferedImage.getType();
 				
 				int largura = 200;
@@ -316,7 +329,8 @@ public class PessoaBean {
 			if(estado !=null) {
 				
 				pessoa.setEstados(estado);
-				List<Cidades> cidades = JPAUtil.getEntityManager().createQuery("from Cidades where estados.id = " +  estado.getId()).getResultList();
+				@SuppressWarnings("unchecked")
+				List<Cidades> cidades = jpaUtil.getEntityManager().createQuery("from Cidades where estados.id = " +  estado.getId()).getResultList();
 				
 				List<SelectItem> selectItemsCidades = new ArrayList<SelectItem>();
 				
@@ -338,7 +352,8 @@ public class PessoaBean {
 			Estados estado = pessoa.getCidades().getEstados();
 			pessoa.setEstados(estado);
 			
-			List<Cidades> cidades = JPAUtil.getEntityManager().createQuery("from Cidades where estados.id = " +  estado.getId()).getResultList();
+			@SuppressWarnings("unchecked")
+			List<Cidades> cidades = jpaUtil.getEntityManager().createQuery("from Cidades where estados.id = " +  estado.getId()).getResultList();
 			
 			List<SelectItem> selectItemsCidades = new ArrayList<SelectItem>();
 			
