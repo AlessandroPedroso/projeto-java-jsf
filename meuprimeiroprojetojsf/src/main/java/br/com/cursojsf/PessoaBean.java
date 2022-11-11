@@ -27,6 +27,7 @@ import javax.faces.model.SelectItem;
 import javax.imageio.ImageIO;
 import javax.inject.Inject;
 import javax.inject.Named;
+import javax.persistence.EntityManager;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -41,6 +42,7 @@ import br.com.entidades.Estados;
 import br.com.entidades.Pessoa;
 import br.com.jpautil.JPAUtil;
 import br.com.repository.IDaoPessoa;
+import net.bootsfaces.component.selectOneMenu.SelectOneMenu;
 
 //@ViewScoped
 //@SessionScoped
@@ -64,6 +66,9 @@ public class PessoaBean implements Serializable {
 	private List<SelectItem> cidades;
 	
 	private Part arquivofoto;
+	
+	@Inject
+	private EntityManager entityManager;
 	
 	@Inject
 	private DaoGeneric<Pessoa> daoGeneric;
@@ -322,7 +327,7 @@ public class PessoaBean implements Serializable {
 		
 		//String codigoEstado = (String)event.getComponent().getAttributes().get("submittedValue");
 		
-		Estados estado = (Estados) ((HtmlSelectOneMenu) event.getSource()).getValue(); //pega o obejto inteiro selecionado no comboBox
+		Estados estado = (Estados) ((SelectOneMenu) event.getSource()).getValue(); //pega o obejto inteiro selecionado no comboBox
 			
 			//Estados estado = JPAUtil.getEntityManager().find(Estados.class, Long.parseLong(codigoEstado));
 			
@@ -330,7 +335,7 @@ public class PessoaBean implements Serializable {
 				
 				pessoa.setEstados(estado);
 				@SuppressWarnings("unchecked")
-				List<Cidades> cidades = jpaUtil.getEntityManager().createQuery("from Cidades where estados.id = " +  estado.getId()).getResultList();
+				List<Cidades> cidades = entityManager.createQuery("from Cidades where estados.id = " +  estado.getId()).getResultList();
 				
 				List<SelectItem> selectItemsCidades = new ArrayList<SelectItem>();
 				
@@ -353,7 +358,7 @@ public class PessoaBean implements Serializable {
 			pessoa.setEstados(estado);
 			
 			@SuppressWarnings("unchecked")
-			List<Cidades> cidades = jpaUtil.getEntityManager().createQuery("from Cidades where estados.id = " +  estado.getId()).getResultList();
+			List<Cidades> cidades = entityManager.createQuery("from Cidades where estados.id = " +  estado.getId()).getResultList();
 			
 			List<SelectItem> selectItemsCidades = new ArrayList<SelectItem>();
 			

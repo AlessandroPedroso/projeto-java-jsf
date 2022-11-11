@@ -13,26 +13,23 @@ import br.com.entidades.Lancamento;
 @Named
 public class IDaoLancamentoImpl implements IDaoLancamento, Serializable {
 	
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
+	static final long serialVersionUID = 1L;
+	
 	@Inject
 	private EntityManager entityManager;
-	
-	
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public List<Lancamento> consultar(long codUser) {
 		List<Lancamento> lista = null;
 		
 		//EntityManager entityManager = JPAUtil.getEntityManager();
-		EntityTransaction transaction = entityManager.getTransaction();
-		transaction.begin();
+		//EntityTransaction transaction = entityManager.getTransaction();
+		//transaction.begin();
 		
 		lista = entityManager.createQuery(" from Lancamento where usuario.id = " + codUser).getResultList();
 		
-		transaction.commit();
+		//transaction.commit();
 		//entityManager.close();
 		
 		return lista;
