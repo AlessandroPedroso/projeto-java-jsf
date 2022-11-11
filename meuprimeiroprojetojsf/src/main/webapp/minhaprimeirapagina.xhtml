@@ -29,9 +29,11 @@
 				<h:inputFile id="foto" value="#{pessoaBean.arquivofoto}"></h:inputFile>
 				
 				<h:outputLabel value="Nome:" />
-				<h:inputText value="#{pessoaBean.pessoa.nome}" required="true" 
+				<h:inputText value="#{pessoaBean.pessoa.nome}" valueChangeListener="#{pessoaBean.mudancaDeValor}" 
+				required="true" 
 				requiredMessage="Informe o nome do usuário!" 
-				validatorMessage="Nome tem que no minimo 10 letras" pt:placeholder="Informe o nome do usuário">
+				validatorMessage="Nome tem que no minimo 10 letras" 
+				pt:placeholder="Informe o nome do usuário">
 					<f:validateLength minimum="2" maximum="50"/>
 				</h:inputText>
 				
@@ -141,12 +143,12 @@
 
 			<h:outputLabel/>
 				<h:panelGroup>
-					<h:commandButton value="Novo" id="botaoNovo" action="#{pessoaBean.novo}"  image="/resources/img/iconadd.png" title="Novo">
+					<h:commandButton value="Novo" id="botaoNovo" action="#{pessoaBean.novo}"  image="/resources/img/iconadd.png" title="Novo" immediate="true">
 						<f:ajax execute="botaoNovo" render="@form"/>
 					</h:commandButton>
-					<h:commandButton value="Salvar" action="#{pessoaBean.salvar}" image="/resources/img/salvar.png" title="Salvar" style="margin-left:1cm;"/>
-					<h:commandButton value="Remove" action="#{pessoaBean.remove}" image="/resources/img/excluir.png" title="Excluir" style="margin-left:1cm;"/>
-					<h:commandButton value="Limpar" id="botaoLimpar" action="#{pessoaBean.limpar}" style="margin-left:1cm;">
+					<h:commandButton value="Salvar" actionListener="#{pessoaBean.registraLog}" action="#{pessoaBean.salvar}" image="/resources/img/salvar.png" title="Salvar" style="margin-left:1cm;"/>
+					<h:commandButton value="Remove" action="#{pessoaBean.remove}" image="/resources/img/excluir.png" title="Excluir" style="margin-left:1cm;" immediate="true"/>
+					<h:commandButton value="Limpar" id="botaoLimpar" action="#{pessoaBean.limpar}" style="margin-left:1cm;" immediate="true">
 						<f:ajax execute="botaoLimpar" render="@form"/>
 					</h:commandButton>
 				</h:panelGroup>
@@ -169,6 +171,14 @@
 				<f:facet name="header">Nome</f:facet>
 				<h:outputText value="#{p.nome}" />
 
+			</h:column>
+
+			<h:column>
+				<f:facet name="header">Foto</f:facet>
+				<h:commandLink actionListener="#{pessoaBean.download}"> <!-- actionListener não redireciona a pagina -->
+					<h:graphicImage width="60" height="60" value="#{p.fotoIconBase64}"></h:graphicImage>
+					<f:param name="fileDownloadId" value="#{p.id}"/>
+				</h:commandLink>
 			</h:column>
 
 			<h:column>
@@ -200,7 +210,7 @@
 
 			<h:column rendered="#{pessoaBean.permiteAcesso('ADMINISTRADOR')}">
 				<f:facet name="header">Excluir</f:facet>
-				<h:commandLink action="#{pessoaBean.remove}" title="Excluir">
+				<h:commandLink action="#{pessoaBean.remove}" title="Excluir" immediate="true">
 					<f:setPropertyActionListener value="#{p}" target="#{pessoaBean.pessoa}" />
 					<h:graphicImage value="/resources/img/excluir.png"/>
 				</h:commandLink>

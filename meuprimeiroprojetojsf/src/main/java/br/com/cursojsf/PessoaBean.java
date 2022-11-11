@@ -11,9 +11,9 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.URL;
 import java.net.URLConnection;
-import java.nio.Buffer;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
@@ -23,9 +23,11 @@ import javax.faces.component.html.HtmlSelectOneMenu;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.faces.event.AjaxBehaviorEvent;
+import javax.faces.event.ValueChangeEvent;
 import javax.faces.model.SelectItem;
 import javax.imageio.ImageIO;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.servlet.http.Part;
 import javax.xml.bind.DatatypeConverter;
@@ -60,42 +62,97 @@ public class PessoaBean {
 	
 	private Part arquivofoto;
 	
+
+	public Pessoa getPessoa() {
+		return pessoa;
+	}
+
+	public void setPessoa(Pessoa pessoa) {
+		this.pessoa = pessoa;
+	}
+
+
+	public DaoGeneric<Pessoa> getDaoGeneric() {
+		return daoGeneric;
+	}
+
+
+	public void setDaoGeneric(DaoGeneric<Pessoa> daoGeneric) {
+		this.daoGeneric = daoGeneric;
+	}
 	
+	public void setPessoas(List<Pessoa> pessoas) {
+		this.pessoas = pessoas;
+	}
 	
+	public List<Pessoa> getPessoas() {
+		return pessoas;
+	}
+	
+
+	public void setEstados(List<SelectItem> estados) {
+		this.estados = estados;
+	}
+	
+	public List<SelectItem> getEstados() {
+		estados = iDaoPessoa.listaEstados();
+		return estados;
+	}
+	
+	public void setCidades(List<SelectItem> cidades) {
+		this.cidades = cidades;
+	}
+	
+	public List<SelectItem> getCidades() {
+		return cidades;
+	}
+	
+	public void setArquivofoto(Part arquivofoto) {
+		this.arquivofoto = arquivofoto;
+	}
+	
+	public Part getArquivofoto() {
+		return arquivofoto;
+	}
+	
+
 	public void salvar() throws IOException {
 		
+		if(arquivofoto !=null) {
 		/*Processar imagem*/
 		byte[] imagemByte = getByte(arquivofoto.getInputStream());
 		pessoa.setFotoIconBase64Original(imagemByte); /*salva imagem original*/
 		
 		/*transformar em um bufferimage*/
 		BufferedImage bufferedImage = ImageIO.read(new ByteArrayInputStream(imagemByte));
-		
-		/*pega o tipo da imagem*/
-		int type = bufferedImage.getType() == 0? bufferedImage.TYPE_INT_ARGB:bufferedImage.getType();
-		
-		int largura = 200;
-		int altura = 200;
-		
-		/*criar a miniatura*/
-		
-		BufferedImage resizedImage = new BufferedImage(largura, altura, type);
-		Graphics2D g = resizedImage.createGraphics();
-		g.drawImage(bufferedImage, 0, 0, largura, altura, null);
-		g.dispose();
-		
-		/*Escrever novamente a imagem em tamanho menor*/
-		ByteArrayOutputStream baos = new ByteArrayOutputStream();
-		String extensao = arquivofoto.getContentType().split("\\/")[1]; /*imagem/png - pega a extensão quebrando no array a posição 1*/
-		ImageIO.write(resizedImage, extensao, baos);
-		
-		String miniImagem = "data:" + arquivofoto.getContentType() + ";base64," + DatatypeConverter.printBase64Binary(baos.toByteArray());
-		/*Processar imagem*/
-		
-		//System.out.println(arquivofoto);
-		pessoa.setFotoIconBase64(miniImagem);
-		pessoa.setExtensao(extensao);
-		
+		if(bufferedImage !=null) {
+			pessoa.setFotoIconBase64Original(imagemByte);/*salva imagem original*/
+				/*pega o tipo da imagem*/
+				int type = bufferedImage.getType() == 0? bufferedImage.TYPE_INT_ARGB:bufferedImage.getType();
+				
+				int largura = 200;
+				int altura = 200; 
+				
+				/*criar a miniatura*/
+				
+				BufferedImage resizedImage = new BufferedImage(largura, altura, type);
+				Graphics2D g = resizedImage.createGraphics();
+				g.drawImage(bufferedImage, 0, 0, largura, altura, null);
+				g.dispose();
+				
+				/*Escrever novamente a imagem em tamanho menor*/
+				ByteArrayOutputStream baos = new ByteArrayOutputStream();
+				String extensao = arquivofoto.getContentType().split("\\/")[1]; /*imagem/png - pega a extensão quebrando no array a posição 1*/
+				ImageIO.write(resizedImage, extensao, baos);
+				
+				String miniImagem = "data:" + arquivofoto.getContentType() + ";base64," + DatatypeConverter.printBase64Binary(baos.toByteArray());
+				/*Processar imagem*/
+				
+				//System.out.println(arquivofoto);
+				pessoa.setFotoIconBase64(miniImagem);
+				pessoa.setExtensao(extensao);
+			}
+		}
 		pessoa = daoGeneric.merge(pessoa);
 		carregarPessoas();
 		mostrarMsg("Cadastrado com sucesso!");// mostrar mensagem por ultimo SEMPRE!
@@ -104,6 +161,19 @@ public class PessoaBean {
 		pessoa = new Pessoa();
 		*/
 		
+	}
+	
+	public void registraLog() { /*método registra log é chamado antes do salvar, pelo evento actionListener*/
+		
+		System.out.println("Registra Log");
+		/*Criar a rotina de gravação de log*/
+		
+		
+	}
+	
+	public void mudancaDeValor(ValueChangeEvent evento) {
+		System.out.println("Valor antigo: " + evento.getOldValue());
+		System.out.println("Valor novo: " + evento.getNewValue());
 	}
 	
 	private void mostrarMsg(String msg) {
@@ -172,32 +242,7 @@ public class PessoaBean {
 			mostrarMsg("Erro ao consultar o cep");
 		}
 	}
-
-	public Pessoa getPessoa() {
-		return pessoa;
-	}
-
-	public void setPessoa(Pessoa pessoa) {
-		this.pessoa = pessoa;
-	}
-
-
-	public DaoGeneric<Pessoa> getDaoGeneric() {
-		return daoGeneric;
-	}
-
-
-	public void setDaoGeneric(DaoGeneric<Pessoa> daoGeneric) {
-		this.daoGeneric = daoGeneric;
-	}
 	
-	public void setPessoas(List<Pessoa> pessoas) {
-		this.pessoas = pessoas;
-	}
-	
-	public List<Pessoa> getPessoas() {
-		return pessoas;
-	}
 	
 	public String deslogar() {
 		
@@ -246,7 +291,6 @@ public class PessoaBean {
 		return "index.jsf";
 	}
 	
-	
 	public Boolean permiteAcesso(String acesso) {
 		
 		FacesContext context = FacesContext.getCurrentInstance();
@@ -259,15 +303,6 @@ public class PessoaBean {
 		
 		return pessoaUser.getPerfilUser().equals(acesso);
 		
-	}
-	
-	public void setEstados(List<SelectItem> estados) {
-		this.estados = estados;
-	}
-	
-	public List<SelectItem> getEstados() {
-		estados = iDaoPessoa.listaEstados();
-		return estados;
 	}
 	
 	public void carregaCidades(AjaxBehaviorEvent event) {
@@ -318,21 +353,7 @@ public class PessoaBean {
 		//System.out.println(pessoa);
 	}
 	
-	public void setCidades(List<SelectItem> cidades) {
-		this.cidades = cidades;
-	}
-	
-	public List<SelectItem> getCidades() {
-		return cidades;
-	}
-	
-	public void setArquivofoto(Part arquivofoto) {
-		this.arquivofoto = arquivofoto;
-	}
-	
-	public Part getArquivofoto() {
-		return arquivofoto;
-	}
+
 	
 	/*Método que converte inputstream para array de bytes*/
 	private byte[] getByte (InputStream is) throws IOException {
@@ -358,6 +379,26 @@ public class PessoaBean {
 		 return buf;
 	}
 	
+	public void download() throws IOException {
+		
+		Map<String, String> params = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap();
+		String fileDownloadId = params.get("fileDownloadId");
+		System.out.println(fileDownloadId);
+		
+		Pessoa pessoa = daoGeneric.consultar(Pessoa.class, fileDownloadId);
+		
+		//System.out.println(pessoa);
+		
+		HttpServletResponse response = (HttpServletResponse) FacesContext.getCurrentInstance().getExternalContext().getResponse();
+		
+		response.addHeader("Content-Disposition", "attachment; filename=download." + pessoa.getExtensao());
+		response.setContentType("application/octet-stream");
+		response.setContentLengthLong(pessoa.getFotoIconBase64Original().length);
+		response.getOutputStream().write(pessoa.getFotoIconBase64Original());
+		response.getOutputStream().flush();
+		FacesContext.getCurrentInstance().responseComplete();
+		
+	}	
 	
 	/*
 	private String nome;

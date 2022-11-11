@@ -5,6 +5,8 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 
+import org.apache.catalina.realm.JAASCallbackHandler;
+
 import br.com.jpautil.JPAUtil;
 
 public class DaoGeneric<E> {
@@ -77,6 +79,21 @@ public class DaoGeneric<E> {
 		entityManager.close();
 		
 		return retorno;
+		
+	}
+	
+	public E consultar(Class<E> entidade, String codigo) {
+		
+		EntityManager entityManager = JPAUtil.getEntityManager();
+		EntityTransaction transaction = entityManager.getTransaction();
+		transaction.begin();
+		
+		E objeto = (E) entityManager.find(entidade, Long.parseLong(codigo));
+		
+		transaction.commit();
+		entityManager.close();
+		
+		return objeto;
 		
 	}
 			
