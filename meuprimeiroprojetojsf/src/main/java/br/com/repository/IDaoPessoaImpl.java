@@ -16,10 +16,7 @@ import br.com.jpautil.JPAUtil;
 
 @Named
 public class IDaoPessoaImpl implements IDaoPessoa,Serializable {
-	
-	/**
-	 * 
-	 */
+
 	private static final long serialVersionUID = 1L;
 	@Inject
 	private EntityManager entityManager;
@@ -32,7 +29,14 @@ public class IDaoPessoaImpl implements IDaoPessoa,Serializable {
 		EntityTransaction transaction = entityManager.getTransaction();
 		transaction.begin();
 		
-		pessoa = (Pessoa) entityManager.createQuery("select p from Pessoa p where p.login = '"+ login + "' and p.senha = '"+ senha +"'").getSingleResult();
+		try {
+			
+			pessoa = (Pessoa) entityManager.createQuery("select p from Pessoa p where p.login = '"+ login + "' and p.senha = '"+ senha +"'").getSingleResult();
+			
+		} catch (Exception e) { /*Tratamento se não encontrar usuário com login e senha*/
+		    
+		}
+		
 		
 		transaction.commit();
 		

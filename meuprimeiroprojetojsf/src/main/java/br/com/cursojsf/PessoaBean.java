@@ -52,9 +52,7 @@ import net.bootsfaces.component.selectOneMenu.SelectOneMenu;
 @Named(value = "pessoaBean")// manegedBean do cdi
 public class PessoaBean implements Serializable {
 
-	/**
-	 * 
-	 */
+	
 	private static final long serialVersionUID = 1L;
 
 	private Pessoa pessoa = new Pessoa();
@@ -142,6 +140,7 @@ public class PessoaBean implements Serializable {
 		
 		/*transformar em um bufferimage*/
 		BufferedImage bufferedImage = ImageIO.read(new ByteArrayInputStream(imagemByte));
+		
 		if(bufferedImage !=null) {
 			pessoa.setFotoIconBase64Original(imagemByte);/*salva imagem original*/
 				/*pega o tipo da imagem*/
@@ -171,6 +170,7 @@ public class PessoaBean implements Serializable {
 				pessoa.setExtensao(extensao);
 			}
 		}
+		
 		pessoa = daoGeneric.merge(pessoa);
 		carregarPessoas();
 		mostrarMsg("Cadastrado com sucesso!");// mostrar mensagem por ultimo SEMPRE!
@@ -302,6 +302,9 @@ public class PessoaBean implements Serializable {
 			
 			return "minhaprimeirapagina.jsf?faces-redirect=true";
 			
+		}else {
+			
+			FacesContext.getCurrentInstance().addMessage("msg", new FacesMessage("Usuário não encontrado!"));
 		}
 		
 		//System.out.println(pessoa.getLogin() + " - " + pessoa.getSenha());
