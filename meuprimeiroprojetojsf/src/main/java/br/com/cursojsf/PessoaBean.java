@@ -220,7 +220,7 @@ public class PessoaBean implements Serializable {
 	
 	@PostConstruct //carrega a lista quando abrir a pagina
 	public void carregarPessoas() {
-		pessoas = daoGeneric.getListEntity(Pessoa.class);
+		pessoas = daoGeneric.getListEntityLimit10(Pessoa.class);
 	}
 	
 	public void pesquisaCep(AjaxBehaviorEvent event) {

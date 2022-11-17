@@ -13,10 +13,7 @@ import br.com.jpautil.JPAUtil;
 
 @Named
 public class DaoGeneric<E> implements Serializable {
-	
-	/**
-	 * 
-	 */
+
 	private static final long serialVersionUID = 1L;
 
 	@Inject
@@ -83,6 +80,20 @@ public class DaoGeneric<E> implements Serializable {
 		transaction.begin();
 		
 		List<E> retorno = entityManager.createQuery("from " + entidade.getName()).getResultList();
+		
+		transaction.commit();
+		
+		return retorno;
+		
+	}
+	
+	public List<E> getListEntityLimit10(Class<E> entidade){
+		EntityTransaction transaction = entityManager.getTransaction();
+		transaction.begin();
+		
+		@SuppressWarnings("unchecked")
+		List<E> retorno = entityManager.createQuery("from " + entidade.getName() + " order by id desc")
+				.setMaxResults(10).getResultList();
 		
 		transaction.commit();
 		

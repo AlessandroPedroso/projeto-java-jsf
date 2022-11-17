@@ -5,19 +5,59 @@
 	  xmlns:b="http://bootsfaces.net/ui">
 
 <h:head>
-
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>Login</title>
+
+<style>
+
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Roboto', sans-serif;
+}
+
+body{
+background: rgb(249,69,88);
+background: linear-gradient(90deg, rgba(249,69,88,1) 1%, rgba(89,69,249,1) 82%, rgba(242,88,88,1) 100%, rgba(0,212,255,1) 100%);
+display: flex;
+justify-content: center;
+align-items: center;
+}
+
+
+#formLogin{
+	width: 35vw;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	margin: 170px 0;
+}
+h2{
+display: flex;
+justify-content: center;
+align-items: center;
+}
+
+@media(max-width:760px){ /*a baixo de 760px vai realizar minhas mudanças*/
+
+	#formLogin{
+		width: 400vw;
+	}
+}
+</style>
 
 </h:head>
 
 <h:body>
+			
+	<b:form id="formLogin">
 	
-	<b:messages autoUpdate="true" id="msg" />
-	
-	<b:form id="formLogin" style="margin-top:10%; margin-left:20%;">
-		<h1>Realize o login</h1>
+		<b:panelGrid columns="1">
 		
-		<b:panelGrid columns="3">
+		<b:panel>
+		<h2>Realize o login</h2>
+			<b:messages autoUpdate="true" id="msg" />
 			<b:column>
 				<h:outputLabel value="Login: "/>
 				<b:inputText id="login" value="#{pessoaBean.pessoa.login}" required="true" requiredMessage="Informe o login"/>
@@ -30,8 +70,13 @@
 				<b:message for="senha"/>
 			</b:column>
 			
+			<b:column>
+					<b:commandButton value="Acessar" action="#{pessoaBean.logar}" style="width:100%;"/>
+			</b:column>
+			</b:panel>
 		</b:panelGrid>
-	<b:commandButton value="Acessar" action="#{pessoaBean.logar}" style="width:50%;"/>
+
+
 	</b:form>
 
 </h:body>

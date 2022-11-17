@@ -2,13 +2,27 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Frameset//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-frameset.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" 
 	  xmlns:h="http://java.sun.com/jsf/html"
-	  xmlns:f="http://java.sun.com/jsf/core">
+	  xmlns:f="http://java.sun.com/jsf/core"
+	  xmlns:b="http://bootsfaces.net/ui">
+	  
+
 	
-		<h:form>
-				<h:commandLink value="Administração" action="minhaprimeirapagina?faces-redirect=true" rendered="#{pessoaBean.permiteAcesso('ADMINISTRADOR')}" style="margin-left:1cm;"/>
-				<h:commandLink value="Lançamentos" action="lancamento?faces-redirect=true" style="margin-left:1cm;"/>
-				<h:commandLink value="Trocar o Usuário" action="#{pessoaBean.deslogar}" style="margin-left:1cm;"/>
-		
-		</h:form>
+<h:form>
+<b:navBar brand="Menu" fluid="true">
+	<b:navbarLinks>
+	  	<b:navCommandLink action="minhaprimeirapagina?faces-redirect=true" value="Administração" rendered="#{pessoaBean.permiteAcesso('ADMINISTRADOR')}" />
+	  	<b:navCommandLink value="Lançamentos" action="lancamento?faces-redirect=true"/>
+	  	<b:navCommandLink value="Trocar o Usuário" action="#{pessoaBean.deslogar}"/>
+	  	
+	  	<b:dropMenu value="Relatórios">
+	  		<b:navCommandLink value="Rel. Notas" action="rellancamento?faces-redirect=true"/>
+	  		<b:navCommandLink value="Rel. Usuário"/>
+	  	</b:dropMenu>
+	  	
+	  	
+	 </b:navbarLinks>
+  </b:navBar>
+
+</h:form>
 		
 </html>

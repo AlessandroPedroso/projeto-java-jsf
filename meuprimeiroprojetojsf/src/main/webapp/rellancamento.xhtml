@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Frameset//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-frameset.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:b="http://bootsfaces.net/ui" 
+	  xmlns:h="http://java.sun.com/jsf/html"
+	  xmlns:f="http://java.sun.com/jsf/core"
+	  xmlns:ui = "http://java.sun.com/jsf/facelets">
+
+<h:head>
+
+<title>Lançamentos</title>
+
+<!-- 
+<style type="text/css">
+*{
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+html,body{
+    height: auto;
+}
+
+.container{
+width: 100vw;
+height: 100vh;
+display: flex;
+flex-direction: row;
+justify-content: center;
+align-items: center;
+}
+
+  .box {
+        width: 300px;
+        height: 300px;
+    }
+</style>
+ -->
+</h:head>
+
+<h:body>
+
+	<ui:include src="/menu.xhtml"></ui:include> <!-- MENU -->
+
+	<b:messages id="msg"/>
+	<b:form id="formLancamento">
+			
+			<b:panelGrid columns="2">
+				
+				
+			</b:panelGrid>
+			
+					<b:commandButton value="Buscar" action="#{relLacamento.buscarLancamento}" />
+					<br></br>
+					<br></br>
+					<br></br>
+			</b:form>
+			
+			<b:form>
+			<b:dataTable value="#{relLacamento.listLancamento}" var="lanc" pdf="true" excel="true"> 
+			
+			<b:dataTableColumn value="#{lanc.id}" label="ID"/>
+			<b:dataTableColumn value="#{lanc.usuario.nome}" label="Usuário" />
+			<b:dataTableColumn value="#{lanc.dataInicial}" label="Inicial" />
+			<b:dataTableColumn value="#{lanc.dataFinal}" label="Final" />
+
+		</b:dataTable>
+		
+	</b:form>
+
+</h:body>
+
+</html>

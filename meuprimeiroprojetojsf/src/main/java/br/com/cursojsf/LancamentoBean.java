@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
+import javax.faces.application.FacesMessage;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
@@ -51,6 +52,8 @@ import br.com.repository.IDaoLancamento;
 		
 		carregarLancamentos();
 		
+		FacesContext.getCurrentInstance().addMessage("msg", new FacesMessage("Salvo com sucesso."));
+		
 		return""; // retorna para ficar na mesma tela, funciona com void também
 	}
 	
@@ -59,7 +62,7 @@ import br.com.repository.IDaoLancamento;
 		
 		Long idLogado = usuarioLogadoId();
 		
-		lancamentosList = daoLancamento.consultar(idLogado);
+		lancamentosList = daoLancamento.consultarLimit10(idLogado);
 	}
 	
 	private Long usuarioLogadoId() {
@@ -86,6 +89,7 @@ import br.com.repository.IDaoLancamento;
 		daoGeneric.DeletePorId(lancamento);
 		lancamento = new Lancamento();//limpa o objeto
 		carregarLancamentos();
+		FacesContext.getCurrentInstance().addMessage("msg", new FacesMessage("Excluído com sucesso."));
 		return ""; 
 	}
 

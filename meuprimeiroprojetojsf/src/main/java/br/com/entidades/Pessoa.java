@@ -23,6 +23,8 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import org.hibernate.validator.constraints.NotEmpty;
+import org.hibernate.validator.constraints.br.CPF;
+import org.hibernate.validator.constraints.br.TituloEleitoral;
 
 @Entity
 public class Pessoa implements Serializable {
@@ -80,6 +82,12 @@ public class Pessoa implements Serializable {
 	
 	private String ddd;
 	
+	@CPF
+	private String cpf;
+	
+	@TituloEleitoral
+	private String tituloEleitor;
+	
 	@ManyToOne
 	private Cidades cidades;
 	
@@ -97,6 +105,22 @@ public class Pessoa implements Serializable {
 	private byte[] fotoIconBase64Original;
 	
 	
+	public String getCpf() {
+		return cpf;
+	}
+
+	public void setCpf(String cpf) {
+		this.cpf = cpf;
+	}
+
+	public String getTituloEleitor() {
+		return tituloEleitor;
+	}
+
+	public void setTituloEleitor(String tituloEleitor) {
+		this.tituloEleitor = tituloEleitor;
+	}
+
 	public String getFotoIconBase64() {
 		return fotoIconBase64;
 	}
