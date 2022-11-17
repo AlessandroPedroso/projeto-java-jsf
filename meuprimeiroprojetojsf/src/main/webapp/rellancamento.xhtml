@@ -48,10 +48,25 @@ align-items: center;
 			
 			<b:panelGrid columns="2">
 				
+				<b:column>
+					<h:outputLabel value="Data Inicio:"/>
+					<b:datepicker locale="en" value="#{relLacamento.dataIni}" />
+				</b:column>
+				
+				<b:column>
+					<h:outputLabel value="Data Fim:"/>
+					<b:datepicker locale="en" value="#{relLacamento.dataFim}" />
+				</b:column>
+				
+				<b:column>
+					<h:outputLabel value="Número nota:"/>
+					<b:inputText value="#{relLacamento.numNota}" />
+				</b:column>
+				
 				
 			</b:panelGrid>
 			
-					<b:commandButton value="Buscar" action="#{relLacamento.buscarLancamento}" />
+					<b:commandButton value="Buscar" action="#{relLacamento.buscarLancamento}" look="primary" style="margin-left:15px;" />
 					<br></br>
 					<br></br>
 					<br></br>
