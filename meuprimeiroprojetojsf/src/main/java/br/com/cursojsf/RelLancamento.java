@@ -71,7 +71,7 @@ public class RelLancamento implements Serializable {
 				listLancamento = daoGeneric.getListEntity(Lancamento.class);
 				
 			}else {
-				
+				listLancamento = daoLancamento.relatorioLancamento(numNota, dataIni, dataFim);
 			}
 			
 		}
