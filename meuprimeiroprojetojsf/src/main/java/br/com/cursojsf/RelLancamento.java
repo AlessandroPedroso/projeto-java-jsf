@@ -21,7 +21,6 @@ public class RelLancamento implements Serializable {
 	
 		private Date dataIni;
 		private Date dataFim;
-		
 		private String numNota;
 		
 		private List<Lancamento> listLancamento = new ArrayList<Lancamento>();

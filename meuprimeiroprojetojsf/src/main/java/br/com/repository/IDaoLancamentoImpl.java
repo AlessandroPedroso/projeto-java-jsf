@@ -1,6 +1,7 @@
 package br.com.repository;
 
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -65,6 +66,33 @@ public class IDaoLancamentoImpl implements IDaoLancamento, Serializable {
 		if(dataIni == null && dataFim == null && numNota !=null && !numNota.isEmpty()) {
 			
 			sql.append(" where l.numeroNotaFiscal = '").append(numNota.trim()).append("'");
+			
+		}else if(numNota == null || (numNota !=null && numNota.isEmpty()) && dataIni != null && dataFim == null) {
+			
+			String dataIniString = new SimpleDateFormat("yyyy-MM-dd").format(dataIni);
+			sql.append(" where l.dataInicial >= '").append(dataIniString).append("'");
+			
+		}else if(numNota == null || (numNota !=null && numNota.isEmpty()) && dataIni == null && dataFim != null) {
+			
+			String dataFimString = new SimpleDateFormat("yyyy-MM-dd").format(dataFim);
+			sql.append(" where l.dataFinal <= '").append(dataFimString).append("'");
+			
+		}else if(numNota == null || (numNota !=null && numNota.isEmpty()) && dataIni!=null && dataFim!=null) {
+			
+			String dataIniString = new SimpleDateFormat("yyyy-MM-dd").format(dataIni);
+			String dataFimString = new SimpleDateFormat("yyyy-MM-dd").format(dataFim);
+			
+			sql.append(" where l.dataInicial >= '").append(dataIniString).append("'");
+			sql.append(" and l.dataFinal <= '").append(dataFimString).append("'");
+			
+		}else if(numNota !=null && !numNota.isEmpty() && dataIni!=null && dataFim!=null) {
+			
+			String dataIniString = new SimpleDateFormat("yyyy-MM-dd").format(dataIni);
+			String dataFimString = new SimpleDateFormat("yyyy-MM-dd").format(dataFim);
+			
+			sql.append(" where l.dataInicial >= '").append(dataIniString).append("'");
+			sql.append(" and l.dataFinal <= '").append(dataFimString).append("'");
+			sql.append(" and l.numeroNotaFiscal = '").append(numNota.trim()).append("'");
 			
 		}
 		
