@@ -8,7 +8,7 @@
 
 <h:head>
 
-<title>Lançamentos</title>
+<title>Usuário</title>
 <link rel="stylesheet" type="text/css" href="resources/estilo.css"></link>
 <!-- 
 <style type="text/css">
@@ -44,42 +44,39 @@ align-items: center;
 	<ui:include src="/menu.xhtml"></ui:include> <!-- MENU -->
 
 	<b:messages id="msg"/>
-	<b:form id="formLancamento">
+	<b:form id="formPessoas">
 			
 			<b:panelGrid columns="2">
 				
 				<b:column>
 					<h:outputLabel value="Data Inicio:"/>
-					<b:datepicker locale="en" value="#{relLacamento.dataIni}" />
+					<b:datepicker locale="en" value="#{relUsuario.dataIni}" />
 				</b:column>
 				
 				<b:column>
 					<h:outputLabel value="Data Fim:"/>
-					<b:datepicker locale="en" value="#{relLacamento.dataFim}" />
+					<b:datepicker locale="en" value="#{relUsuario.dataFim}" />
 				</b:column>
 				
 				<b:column>
-					<h:outputLabel value="Número nota:"/>
-					<b:inputText value="#{relLacamento.numNota}" />
+					<h:outputLabel value="Nome:"/>
+					<b:inputText value="#{relUsuario.nome}" />
 				</b:column>
 				
 				
 			</b:panelGrid>
 			
-					<b:commandButton value="Buscar" action="#{relLacamento.buscarLancamento}" look="primary" style="margin-left:15px;" />
+					<b:commandButton value="Buscar" action="#{relUsuario.relPessoa}" look="primary" style="margin-left:15px;" />
 					<br></br>
 					<br></br>
 					<br></br>
 			</b:form>
 			
 			<b:form>
-			<b:dataTable value="#{relLacamento.listLancamento}" var="lanc" pdf="true" excel="true"> 
+			<b:dataTable value="#{relUsuario.pessoas}" var="p" pdf="true" excel="true"> 
 			
-			<b:dataTableColumn value="#{lanc.id}" label="ID"/>
-			<b:dataTableColumn value="#{lanc.usuario.nome}" label="Usuário" />
-			<b:dataTableColumn value="#{lanc.numeroNotaFiscal}" label="Nota" />
-			<b:dataTableColumn value="#{lanc.dataInicial}" label="Inicial" />
-			<b:dataTableColumn value="#{lanc.dataFinal}" label="Final" />
+			<b:dataTableColumn value="#{p.id}" label="ID"/>
+			<b:dataTableColumn value="#{p.nome}" label="Usuário" />
 
 		</b:dataTable>
 		

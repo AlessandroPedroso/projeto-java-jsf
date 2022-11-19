@@ -9,6 +9,7 @@
 
 <h:head>
 <title>Cadastro de Usuário</title>
+<link rel="stylesheet" type="text/css" href="resources/estilo.css"></link>
 </h:head>
 
 <h:body>
@@ -57,17 +58,17 @@
 				<b:panel>
 				<b:column>
 					<h:outputLabel value="Idade:" />
-					<b:inputText value="#{pessoaBean.pessoa.idade}"/>
+					<b:inputText value="#{pessoaBean.pessoa.idade}" mask="numeric"/>
 				</b:column>
 				
 				<b:column>
 					<h:outputLabel value="Titulo Eleitor:" />
-					<b:inputText value="#{pessoaBean.pessoa.tituloEleitor}"/>
+					<b:inputText value="#{pessoaBean.pessoa.tituloEleitor}" mask="numeric"/>
 				</b:column>
 				
 				<b:column>
 					<h:outputLabel value="CPF:" />
-					<b:inputText value="#{pessoaBean.pessoa.cpf}" required="true" validator-message="informe um cpf valido."/>
+					<b:inputText value="#{pessoaBean.pessoa.cpf}" mask="999.999.999-99" required="true" validator-message="informe um cpf valido."/>
 				</b:column>
 				
 
@@ -178,7 +179,7 @@
 			
 			<b:column>
 				<h:outputLabel value="CEP:"/>
-				<b:inputText value="#{pessoaBean.pessoa.cep}" pt:placeholder="Informe um CEP válido">
+				<b:inputText value="#{pessoaBean.pessoa.cep}" pt:placeholder="Informe um CEP válido" mask="99999-999">
 					<f:ajax event="blur" execute="@this" listener="#{pessoaBean.pesquisaCep}"  render="logradouro complemento bairro localidade uf" />
 				</b:inputText>
 			</b:column>	
